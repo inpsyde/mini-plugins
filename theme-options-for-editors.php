@@ -11,9 +11,9 @@
  * Version:     2013.10.22
  */
 
-register_activation_hook( __FILE__, 't5_theme_options_for_editors' );
+register_activation_hook( __FILE__, 'marketpress_theme_options_for_editors' );
 
-add_action( 'admin_notices', 't5_deactivate_theme_options_for_editors', 0 );
+add_action( 'admin_notices', 'marketpress_deactivate_theme_options_for_editors', 0 );
 
 /**
  * Add new capability to "editor" role.
@@ -21,7 +21,7 @@ add_action( 'admin_notices', 't5_deactivate_theme_options_for_editors', 0 );
  * @wp-hook "activate_" . __FILE__
  * @return  void
  */
-function t5_theme_options_for_editors()
+function marketpress_theme_options_for_editors()
 {
 	global $wp_roles;
 
@@ -37,7 +37,7 @@ function t5_theme_options_for_editors()
  * @wp-hook admin_notices
  * @return  void
  */
-function t5_deactivate_theme_options_for_editors()
+function marketpress_deactivate_theme_options_for_editors()
 {
 	// Suppress default activation message.
 	unset( $_GET['activate'] );
