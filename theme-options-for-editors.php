@@ -3,7 +3,6 @@
  * Plugin Name: Theme options for editors
  * Description: Allow editors to change theme options.
  * Plugin URI:  http://marketpress.com/?p=17582
- * Version:     2013.09.05
  * Author:      MarketPress, Thomas Scholz
  * Author URI:  http://marketpress.com/
  * Licence:     GPL 2
