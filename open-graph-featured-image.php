@@ -10,14 +10,25 @@
  * License URI: http://opensource.org/licenses/GPL-2.0
  */
 
-
 add_action( 'wp_head', 'marketpress_ogp_image' );
 
+/**
+ * Create meta element for preview image.
+ *
+ * @wp-hook wp_head
+ * @return  void
+ */
 function marketpress_ogp_image() {
 
 	// restricted to singular pages only
-	// and there has to be a featured image set
-	if ( ! is_singular() or ! $thumb_id = get_post_thumbnail_id() )
+	if ( ! is_singular() )
+		return;
+
+	// there has to be a featured image set
+	$thumb_id = get_post_thumbnail_id();
+
+	// no featured image. stop.
+	if ( empty ( $thumb_id ) )
 		return;
 
 	// FALSE or array
@@ -28,7 +39,9 @@ function marketpress_ogp_image() {
 		return;
 
 	// make sure it is a real url
+	$src = esc_url( $image[ 0 ] );
+
 	// esc_url() returns an empty string for some invalid URLs
-	if ( '' !== $src = esc_url( $image[ 0 ] ) )
-		print "<meta property='og:image' content='$src' />";
+	if ( '' !== $src )
+		print "<meta property='http://ogp.me/ns#image' content='$src' />";
 }
