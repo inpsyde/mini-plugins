@@ -9,4 +9,4 @@ What is a mini plugin?
 
 These plugins are so tiny, they don’t need separate repositories.
 
-Have fun!
+Have fun! Your [MarketPress](http://marketpress.com) Team.
