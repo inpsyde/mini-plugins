@@ -20,8 +20,7 @@ add_action( 'admin_notices', 'marketpress_deactivate_theme_options_for_editors',
  * @wp-hook "activate_" . __FILE__
  * @return  void
  */
-function marketpress_theme_options_for_editors()
-{
+function marketpress_theme_options_for_editors() {
 	global $wp_roles;
 
 	if ( empty ( $wp_roles ) )
@@ -36,8 +35,8 @@ function marketpress_theme_options_for_editors()
  * @wp-hook admin_notices
  * @return  void
  */
-function marketpress_deactivate_theme_options_for_editors()
-{
+function marketpress_deactivate_theme_options_for_editors() {
+	
 	// Suppress default activation message.
 	unset( $_GET['activate'] );
 	$name = get_file_data( __FILE__, array ( 'Plugin Name' ), 'plugin' );
