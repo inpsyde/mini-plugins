@@ -21,7 +21,7 @@ add_action( 'wp_head', 'marketpress_ogp_image' );
 function marketpress_ogp_image() {
 
 	// restricted to singular pages only
-	if ( ! is_singular() )
+	if ( ! is_singular() or is_feed() )
 		return;
 
 	// there has to be a featured image set
