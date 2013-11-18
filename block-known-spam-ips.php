@@ -37,5 +37,6 @@ function marketpress_block_known_spam_ips( Array $commentdata ) {
 	if ( empty ( $match ) ) // nothing found
 		return $commentdata;
 
+	// you could send a redirect here instead.
 	exit; // spammer detected
 }
