@@ -1,6 +1,6 @@
 <?php # -*- coding: utf-8 -*-
 /**
- * Plugin Name: Use WooCommerce PrettyPhoto Sverywhere
+ * Plugin Name: Use WooCommerce PrettyPhoto Everywhere
  * Description: Use the WooCommerce PrettyPhoto Lightbox for galleries and single images.
  * Plugin URI:  http://marketpress.com/
  * Version:     2013.11.15
