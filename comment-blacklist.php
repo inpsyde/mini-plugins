@@ -60,6 +60,7 @@ function marketpress_comment_blacklist( $new_status, $old_status, $comment ){
 		// comment is approved/unapproved, not trashed and the ip does exists in blacklist
 		$update     = true;
 		$blacklist  = array_diff( $blacklist, array( $the_ip ) );
+		$blacklist  = apply_filters( 'marketpress_comment_blacklist_remove', $blacklist, $new_status, $old_status, $comment );
 
 	}
 	else if ( $new_status === 'spam' && !in_array( $the_ip, $blacklist ) ) {
@@ -67,7 +68,7 @@ function marketpress_comment_blacklist( $new_status, $old_status, $comment ){
 		// comment is now spam and ip does not exists in blacklist
 		$update         = true;
 		$blacklist[]    = $the_ip;
-
+		$blacklist      = apply_filters( 'marketpress_comment_blacklist_add', $blacklist, $new_status, $old_status, $comment );
 	}
 
 	// do we have an update?
