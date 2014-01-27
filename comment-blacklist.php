@@ -46,36 +46,41 @@ function marketpress_comment_blacklist_activation() {
  */
 function marketpress_comment_blacklist( $new_status, $old_status, $comment ){
 
-	$blacklist = get_option( 'blacklist_keys', array() );
+	$orig_blacklist = get_option( 'blacklist_keys', array() );
 
-	if( !is_array( $blacklist ) ){
-		$blacklist = explode( "\n" , trim( $blacklist ) );
+	if( !is_array( $orig_blacklist ) ){
+		$orig_blacklist = explode( "\n" , trim( $orig_blacklist ) );
 	}
+	$new_blacklist = $orig_blacklist;
+	$the_ip        = $comment->comment_author_IP;
 
-	$the_ip = $comment->comment_author_IP;
-	$update = false;
+	if ( $old_status === 'spam' && !in_array( $new_status, array( 'trash', 'delete' ) ) ){
+		// comment is approved/unapproved, not trashed
 
-	if ( $old_status === 'spam' && !in_array( $new_status, array( 'trash', 'delete' ) ) && in_array( $the_ip, $blacklist ) ){
+		if( in_array( $the_ip, $orig_blacklist ) ){
+			// ...and the ip does exists in blacklist
+			$new_blacklist  = array_diff( $new_blacklist, array( $the_ip ) );
+		}
 
-		// comment is approved/unapproved, not trashed and the ip does exists in blacklist
-		$update     = true;
-		$blacklist  = array_diff( $blacklist, array( $the_ip ) );
+		$new_blacklist = apply_filters( 'marketpress_comment_blacklist_remove', $new_blacklist, $new_status, $old_status, $comment );
 
 	}
-	else if ( $new_status === 'spam' && !in_array( $the_ip, $blacklist ) ) {
+	else if ( $new_status === 'spam' ) {
+		// comment is now spam
 
-		// comment is now spam and ip does not exists in blacklist
-		$update         = true;
-		$blacklist[]    = $the_ip;
+		if( !in_array( $the_ip, $orig_blacklist ) ){
+			// ...and the ip does not exists in blacklist
+			$new_blacklist[]    = $the_ip;
+		}
+
+		$new_blacklist = apply_filters( 'marketpress_comment_blacklist_add', $new_blacklist, $new_status, $old_status, $comment );
 
 	}
 
 	// do we have an update?
-	if( $update ) {
-
-		$blacklist = implode( "\n", $blacklist );
-		update_option( 'blacklist_keys', $blacklist );
-
+	if( count( $new_blacklist ) !== count( $orig_blacklist ) ) {
+		$new_blacklist = implode( "\n", $new_blacklist );
+		update_option( 'blacklist_keys', $new_blacklist );
 	}
 
 }
